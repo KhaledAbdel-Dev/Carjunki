@@ -1,25 +1,24 @@
 const Post = require("../models/Post");
 
 module.exports = {
-  getProfile: async (req, res) => {
+  getConsult: async (req, res) => {
     try {
-      res.render("profile.ejs", { user: req.user });
+      res.render("consult.ejs", { user: req.user });
     } catch (err) {
       console.log(err);
     }
   },
 
-  getFeed: async (req, res) => {
+  getFinalOffer: async (req, res) => {
     try {
       const finalOffer = await Post.find({ quoteStatus: 'approved' });
-      const acceptedOffer = await Post.db.collection("comments").find
+
       console.log(finalOffer)
-      res.render("feed.ejs", { quote: finalOffer, user: req.user });
+      res.render("offer.ejs", { quote: finalOffer, user: req.user });
     } catch (err) {
       console.log(err);
     }
   },
-
 
   getQuote: async (req, res) => {
     try {
@@ -47,7 +46,7 @@ module.exports = {
         zip: Number(req.body.zip),
         quoteValue: quotePrice
       });
-      console.log("Quote has been added!");
+      console.log("Quote generated!");
       res.redirect("/quote");
     } catch (err) {
       console.log(err);
@@ -66,7 +65,7 @@ module.exports = {
          name: req.body.name
        }
      );
-     res.redirect("/feed");
+     res.redirect("/finalOffer");
    } catch (err) {
      console.log(err);
    }
